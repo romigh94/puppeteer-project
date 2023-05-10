@@ -10,18 +10,19 @@ const fs = require('fs');
     let counter = 0;
     page.on('response', async (response) => {
       const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(response.url());
-      //console.log(matches);
+
       if (matches) {
-        //console.log(matches[2])
-        const extension = matches[1];
         const buffer = await response.buffer();
-        //console.log(buffer)
-        fs.writeFileSync(`images/image-${counter}.${extension}`, buffer, 'base64');
+        const fileName = matches.input.split("/").pop()
+
+
+        //console.log(result)
+        fs.writeFileSync(`images/${fileName}`, buffer, 'base64');
         counter += 1;
       }
     });
   
-    await page.goto('https://www.bannerbear.com/blog/how-to-download-images-from-a-website-using-puppeteer/');
+    await page.goto('https://www.joureliten.se/');
   
     await browser.close();
   })();
