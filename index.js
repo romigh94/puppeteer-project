@@ -7,18 +7,25 @@ const fs = require('fs');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
   
-    let counter = 0;
+    //let counter = 0;
     page.on('response', async (response) => {
       const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(response.url());
 
       if (matches) {
         const buffer = await response.buffer();
         const fileName = matches.input.split("/").pop()
+        const url = matches.input
+        const pathname = new URL(url).pathname
+        const folder = pathname.split(fileName).slice(0, -1)
 
+        fs.mkdirSync(`.${folder}`, {recursive: true}, err => console.log(err))
+        fs.writeFileSync(`.${folder}${fileName}`, buffer, "base64")
 
-        //console.log(result)
-        fs.writeFileSync(`images/${fileName}`, buffer, 'base64');
-        counter += 1;
+        //Links to images
+        //console.log(matches.input)
+        //console.log(pathname)
+        //console.log(fileName)
+
       }
     });
   
