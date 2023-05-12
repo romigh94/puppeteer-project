@@ -23,18 +23,6 @@ const findimages = async () => {
         fs.mkdirSync(`./websites/${url}${folder}`, {recursive: true}, err => console.log(err))
         fs.writeFileSync(`./websites/${url}${folder}${fileName}`, buffer, "base64")
 
-
-        //Uppgifter
-
-        // Få in det i en databas. 
-        //NoSQL
-        
-        //Undersöka möjligheten att köra en enkel databas. Ute efter att man hostar den själv.
-
-
-
-
-
         //Links to images
         //console.log(matches.input)
         //console.log(pathname)
