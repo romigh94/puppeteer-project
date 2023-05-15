@@ -1,12 +1,16 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
-const findimages = async () => {
+
+
+let url
+
+const findimages = async (newurl) => {
+    url = newurl
+
+    try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let pageurl = "https://www.joureliten.se"
-    const url = pageurl.replace(/^https?\:\/\//i, "");
-
   
     //let counter = 0;
     page.on('response', async (response) => {
@@ -17,11 +21,14 @@ const findimages = async () => {
         const fileName = matches.input.split("/").pop()
         const imageurl = matches.input
         const pathname = new URL(imageurl).pathname
+        const website = new URL(imageurl).hostname
         const folder = pathname.split(fileName).slice(0, -1)
+        folder[0].replace(/^https?:\/\//, "").replace(/\?/g, "")
 
 
-        fs.mkdirSync(`./websites/${url}${folder}`, {recursive: true}, err => console.log(err))
-        fs.writeFileSync(`./websites/${url}${folder}${fileName}`, buffer, "base64")
+
+        fs.mkdirSync(`./websites/${website}${folder}`, {recursive: true}, err => console.log(err))
+        fs.writeFileSync(`./websites/${website}${folder}${fileName}`, buffer, "base64")
 
         //Links to images
         //console.log(matches.input)
@@ -30,10 +37,18 @@ const findimages = async () => {
 
       }
     });
-  
-    await page.goto(pageurl);
-  
+
+    console.log(`Visiting ${url}`)
+
+    await page.goto(url, { waitUntil: 'networkidle2' }); 
+
     await browser.close();
+
+
+    } catch(err) {
+      console.log(err)
+    }
   }
 
-  module.exports = {findimages}
+  module.exports = {url: url, findimages}
+  

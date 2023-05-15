@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 require('dotenv').config()
-const {findimages} = require('./findimages')
+const {findallimages} = require('./findallImages')
 const {findallLinks} = require('./findallLinks')
 
 
@@ -13,8 +13,8 @@ try {
     .then(() => console.log("connected to db"))
     .catch(err => console.log(err))
 
-    //await findimages()
-    await findallLinks()
+    await findallimages()
+    //await findallLinks()
 
 } catch(err) {
     console.log(err)
