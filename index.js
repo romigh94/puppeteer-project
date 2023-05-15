@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const {findallimages} = require('./findallImages')
 const {findallLinks} = require('./findallLinks')
-
+const {findTags} = require('./findTags')
 
 const myfunction = async () => {
 
@@ -15,6 +15,7 @@ try {
 
     await findallimages()
     //await findallLinks()
+    //await findTags()
 
 } catch(err) {
     console.log(err)

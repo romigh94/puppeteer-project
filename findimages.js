@@ -9,7 +9,7 @@ const findimages = async (newurl) => {
     url = newurl
 
     try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
   
     //let counter = 0;
@@ -40,7 +40,11 @@ const findimages = async (newurl) => {
 
     console.log(`Visiting ${url}`)
 
+    await page.setViewport({ width: 1200, height: 1080 });
+    //await page.screenshot({ path: 'example.png' });
+
     await page.goto(url, { waitUntil: 'networkidle2' }); 
+
 
     await browser.close();
 
