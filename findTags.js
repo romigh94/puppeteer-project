@@ -8,7 +8,7 @@ const findTags = async () => {
 
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
-    let pageurl = "https://joureliten.se"
+    let pageurl = "https://maries.se"
 
     await page.goto(pageurl)
 
@@ -17,8 +17,6 @@ const findTags = async () => {
     let desc = await page.evaluate(() => {
         return document.querySelector("head > meta[name='description']").getAttribute("content");
     });
-
-    console.log("TITLE:", title, "DESCRIPTION:", desc)
 
     const pageSet = new Set()
     const descSet = new Set()
@@ -35,6 +33,8 @@ const findTags = async () => {
       );
 
     console.log('Tags updated:', updatedPage);
+
+    await browser.close();
 
 
 

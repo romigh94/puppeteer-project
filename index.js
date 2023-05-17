@@ -5,8 +5,10 @@ require('dotenv').config()
 const {findallimages} = require('./findallImages')
 const {findallLinks} = require('./findallLinks')
 const {findTags} = require('./findTags')
+const {findOgTags} = require('./findOgTags')
 
 const myfunction = async () => {
+
 
 try {
     mongoose.connect(process.env.DB_URL)
@@ -14,8 +16,9 @@ try {
     .catch(err => console.log(err))
 
     await findallimages()
-    //await findallLinks()
-    //await findTags()
+    await findallLinks()
+    await findTags()
+    await findOgTags()
 
 } catch(err) {
     console.log(err)

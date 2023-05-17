@@ -1,21 +1,16 @@
 const linkSchema = require('./mongoDBSchemas/linkSchema')
-const fs = require('fs')
-const puppeteer = require('puppeteer')
 const {url, findimages} = require('./findimages')
 
 //console.log(url)
 
 const findallimages = async () => {
 
-
     try {
         const links = await linkSchema.find()
-
 
         for (let insidelinks of links) {
 
             let pageurl = insidelinks.href
-
 
             const randomized = Math.floor(Math.random() * 30000) + 1 
 
@@ -24,13 +19,11 @@ const findallimages = async () => {
             console.log(`after timeout... after ${randomized} ms`)
 
             await findimages(pageurl, url)
-
-
         }
 
-        } catch(err) {
-            console.log(err)
-        }
+    } catch(err) {
+        console.log(err)
+    }
             
 
 }
