@@ -9,28 +9,29 @@ const findOgTags = async () => {
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
         
-        let pageurl = "https://www.maries.se/blogg/vad-ar-egentligen-grejen-med-kollektivavtal/"
+        let pageurl = "https://maries.se/"
 
         await page.goto(pageurl)
+        //console.log(pageurl)
 
         let ogImage = await page.evaluate(() => {
             const ogImageElement = document.querySelector("head > meta[name='og:image']")
-            const ogTwitterElement = document.querySelector("head > meta[name='og:twitter]")
-            return ogImageElement || ogTwitterElement ? ogImageElement.getAttribute('content') : null;
+            const ogTwitterElement = document.querySelector("head > meta[name='og:twitter']")
+            return ogImageElement ||ogTwitterElement ? ogImageElement.getAttribute('content') : null;
         });
+
+        console.log(ogImage)
 
         const imageBuffer = await page.goto(ogImage)
         const buffer = await imageBuffer.buffer()
 
         const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(ogImage);
         const fileName = matches.input.split("/").pop()
-        const imageurl = matches.input 
-        console.log(imageurl)
 
         fs.mkdirSync(`./ogimages`, {recursive: true}, err => console.log(err))
         fs.writeFileSync(`./ogimages/${fileName}`, buffer, "binary")
 
-        console.log("Working")
+        console.log("File uploaded")
 
         await browser.close();
 

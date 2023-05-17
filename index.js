@@ -15,10 +15,10 @@ try {
     .then(() => console.log("connected to db"))
     .catch(err => console.log(err))
 
-    await findallimages()
+    //await findallimages()
     await findallLinks()
     await findTags()
-    await findOgTags()
+    //await findOgTags()
 
 } catch(err) {
     console.log(err)
