@@ -8,17 +8,26 @@ const findOgTags = async () => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
+
+        console.log("Finding Og Tags...")
         
-        let pageurl = "https://maries.se/"
+        let pageurl = "https://soderrorjouren.se/"
 
         await page.goto(pageurl)
         //console.log(pageurl)
 
         let ogImage = await page.evaluate(() => {
-            const ogImageElement = document.querySelector("head > meta[name='og:image']")
-            const ogTwitterElement = document.querySelector("head > meta[name='og:twitter']")
-            return ogImageElement ||ogTwitterElement ? ogImageElement.getAttribute('content') : null;
+            const ogImageElement = document.querySelector("head > meta[property='og:image']")
+            const ogTwitterElement = document.querySelector("head > meta[property='og:twitter']")
+            return ogImageElement || ogTwitterElement ? ogImageElement.getAttribute('content') : null;
         });
+        
+
+        if (!ogImage) {
+            console.log("no OG image found.")
+            await browser.close()
+            return
+        }
 
         console.log(ogImage)
 
@@ -27,9 +36,15 @@ const findOgTags = async () => {
 
         const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(ogImage);
         const fileName = matches.input.split("/").pop()
+        const folder = pageurl.replace(/^https?:\/\//, "").replace(/\?/g, "")
 
-        fs.mkdirSync(`./ogimages`, {recursive: true}, err => console.log(err))
-        fs.writeFileSync(`./ogimages/${fileName}`, buffer, "binary")
+        
+        //const imageurl = matches.input
+        //const website = new URL(imageurl).hostname
+
+
+        fs.mkdirSync(`./ogimages/${folder}`, {recursive: true}, err => console.log(err))
+        fs.writeFileSync(`./ogimages/${folder}/${fileName}`, buffer, "binary")
 
         console.log("File uploaded")
 

@@ -15,9 +15,9 @@ try {
     .then(() => console.log("connected to db"))
     .catch(err => console.log(err))
 
-    //await findallimages()
-    await findallLinks()
-    await findTags()
+    //await findallLinks()
+    await findallimages()
+    //await findTags()
     //await findOgTags()
 
 } catch(err) {

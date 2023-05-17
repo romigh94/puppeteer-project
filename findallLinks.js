@@ -10,8 +10,9 @@ const findallLinks = async () => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
-        let pageurl = "https://maries.se" //Måste vara exakt format som dem länkarna som finns i hemsidan.
+        let pageurl = "https://spectrabygg.se/" //Måste vara exakt format som dem länkarna som finns i hemsidan.
 
+        console.log("Finding all links...")
         console.log(`Visiting page: ${pageurl}`)
 
         await page.goto(pageurl)
@@ -23,12 +24,14 @@ const findallLinks = async () => {
             return link.map(a => a.href)
         })
 
+        console.log(links)
+
         linkSet.add(links)
         visitedSet.add(links)
 
-        const results = []
-
         for (let insidelinks of links) {
+
+            console.log(insidelinks)
 
             if (insidelinks.startsWith(pageurl)) {
 
@@ -58,19 +61,12 @@ const findallLinks = async () => {
 
                 if (url.startsWith(pageurl)) {
                     linkSet.add(url)
-                    const result = await linkSchema.findOneAndUpdate({ href: url }, { href: url }, { upsert: true }) //Will not save duplicates
-
-                    results.push(
-                        result.href
-                    )
+                    await linkSchema.findOneAndUpdate({ href: url }, { href: url }, { upsert: true }) //Will not save duplicates
                 }
             }
         }
 
     }
-
-
-    console.log(results)
 
     await browser.close()
 

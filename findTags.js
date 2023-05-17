@@ -8,7 +8,9 @@ const findTags = async () => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
-        let pageurl = "https://maries.se"
+        let pageurl = "https://www.vvsochbad.se/"
+
+        console.log("Finding Tags....")
 
         await page.goto(pageurl)
 
