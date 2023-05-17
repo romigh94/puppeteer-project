@@ -7,7 +7,7 @@ const findimages = async (newurl) => {
     url = newurl
 
     try {
-    const browser = await puppeteer.launch(/*{headless: false, defaultViewport: null, args: ['--start-maximized']}*/);
+    const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']});
     const page = await browser.newPage();
   
     //let counter = 0;

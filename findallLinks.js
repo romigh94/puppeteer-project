@@ -10,7 +10,7 @@ const findallLinks = async () => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
-        let pageurl = "https://ekospol.se" //Måste vara exakt format som dem länkarna som finns i hemsidan.
+        let pageurl = "https://maries.se" //Måste vara exakt format som dem länkarna som finns i hemsidan.
 
         console.log(`Visiting page: ${pageurl}`)
 
