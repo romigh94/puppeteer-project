@@ -6,7 +6,7 @@ const findTags = async () => {
 
     try {
 
-        const browser = await puppeteer.launch()
+        const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
         let pageurl = "https://maries.se"
 
