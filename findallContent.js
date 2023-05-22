@@ -1,6 +1,6 @@
 const linkSchema = require('./mongoDBSchemas/linkSchema')
 const {url, findimages} = require('./findimages')
-const {findContent } = require('./findContent')
+const {findText } = require('./findText')
 const {findOgTags } = require('./findOgTags')
 const {findTags } = require('./findTags')
 
@@ -22,9 +22,9 @@ const findallContent = async () => {
             console.log(`after timeout... after ${randomized} ms`)
 
             await findimages(pageurl, url)
-            await findContent(pageurl, url)
-            await findOgTags(pageurl, url)
-            await findTags(pageurl, url)
+            await findText(pageurl)
+            await findOgTags(pageurl)
+            await findTags(pageurl)
         }
 
     } catch(err) {

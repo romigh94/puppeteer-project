@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 let url
 
-const findContent = async (newurl) => {
+const findText = async (newurl) => {
 
     url = newurl
 
@@ -57,4 +57,4 @@ const findContent = async (newurl) => {
 }
 
 
-module.exports = {findContent}
+module.exports = {findText}
