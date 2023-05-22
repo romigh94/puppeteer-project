@@ -1,8 +1,10 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs')
 
+let url
+const findOgTags = async (newurl) => {
 
-const findOgTags = async () => {
+url = newurl
 
     try {
 
