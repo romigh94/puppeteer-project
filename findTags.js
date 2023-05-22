@@ -2,17 +2,16 @@ const puppeteer = require('puppeteer');
 const tagSchema = require('./mongoDBSchemas/tagSchema');
 
 
-const findTags = async () => {
-
+const findTags = async (newurl) => {
+let url = newurl
     try {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
-        let pageurl = "https://www.vvsochbad.se/"
 
         console.log("Finding Tags....")
 
-        await page.goto(pageurl)
+        await page.goto(url)
 
         let title = await page.evaluate(() => document.querySelector('title').textContent)
 
@@ -24,14 +23,14 @@ const findTags = async () => {
         const descSet = new Set()
         const titleSet = new Set()
 
-        pageSet.add(pageurl)
+        pageSet.add(url)
         descSet.add(desc)
         titleSet.add(title)
 
 
         const updatedPage = await tagSchema.findOneAndUpdate(
             {},
-            { $set: { url: pageurl, title: title, desc: desc } }
+            { $set: { url: url, title: title, desc: desc } }
         );
 
         console.log('Tags updated:', updatedPage);

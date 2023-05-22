@@ -1,7 +1,10 @@
 const puppeteer = require('puppeteer');
 const linkSchema = require('./mongoDBSchemas/linkSchema')
 
-const findallLinks = async () => {
+const findallLinks = async (url) => {
+
+
+    console.log('from all links', url)
 
     //Alla länkar från alla sidor 
 
@@ -10,7 +13,7 @@ const findallLinks = async () => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
-        let pageurl = "https://spectrabygg.se/" //Måste vara exakt format som dem länkarna som finns i hemsidan.
+        let pageurl = url //Måste vara exakt format som dem länkarna som finns i hemsidan.
 
         console.log("Finding all links...")
         console.log(`Visiting page: ${pageurl}`)

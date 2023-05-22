@@ -3,8 +3,11 @@ const fs = require('fs');
 
 let url
 
-const findimages = async (newurl) => {
-    url = newurl
+const findimages = async (url) => {
+    url = url
+
+
+    //console.log("from images", url)
 
     try {
     const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']});
@@ -14,14 +17,17 @@ const findimages = async (newurl) => {
 
     console.log(`Visiting ${url}`)
 
+    const visitedURL = new Set()
+    
+
+    //const condition = true
+
     //let counter = 0;
     page.on('response', async (response) => {
 
-      if (response.status() >= 300 && response.status() <= 399) {
-        // Handle redirect responses separately
-        console.log('Redirect response:', response.status(), response.url());
-      } else {
       const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(response.url());
+
+      //console.log(response.status)
 
         if (matches) {
           const buffer = await response.buffer()
@@ -40,12 +46,15 @@ const findimages = async (newurl) => {
           //console.log(pathname)
           //console.log(fileName)
 
-        }
+          
+          if (visitedURL.has(response.url())) {
+            console.log('Redirecting to another URL...');
+            await page.goto(url, { waitUntil: 'networkidle2'}); 
+          }
+      
     }
     });
 
-
-    await page.goto(url, { waitUntil: 'networkidle2'}); 
 
 
     await browser.close();

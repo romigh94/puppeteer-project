@@ -12,10 +12,9 @@ url = newurl
         const page = await browser.newPage()
 
         console.log("Finding Og Tags...")
-        
-        let pageurl = "https://soderrorjouren.se/"
 
-        await page.goto(pageurl)
+
+        await page.goto(url)
         //console.log(pageurl)
 
         let ogImage = await page.evaluate(() => {
@@ -38,7 +37,7 @@ url = newurl
 
         const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(ogImage);
         const fileName = matches.input.split("/").pop()
-        const folder = pageurl.replace(/^https?:\/\//, "").replace(/\?/g, "")
+        const folder = url.replace(/^https?:\/\//, "").replace(/\?/g, "")
 
         
         //const imageurl = matches.input

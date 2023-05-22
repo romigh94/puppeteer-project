@@ -6,26 +6,41 @@ const {findTags } = require('./findTags')
 
 //console.log(url)
 
-const findallContent = async () => {
+let start
+
+
+const findallContent = async (url) => {
+
+    start = url
 
     try {
-        const links = await linkSchema.find()
+        const links = await linkSchema.find();
+    
+        const filteredLinks = links.filter(link => link.href.startsWith(start))
+            
+            console.log(filteredLinks)
+    
+        for (let filteredInsideLinks of filteredLinks) {
+
+            await findimages(filteredInsideLinks.href)
+            await findText(filteredInsideLinks.href)
+            await findOgTags(filteredInsideLinks.href)
+            await findTags(filteredInsideLinks.href)
+    
+        }
+
 
         for (let insidelinks of links) {
 
-            let pageurl = insidelinks.href
-
-            const randomized = Math.floor(Math.random() * 30000) + 1 
-
-            console.log('before timeout')
-            await new Promise(resolve => setTimeout(resolve, randomized))
-            console.log(`after timeout... after ${randomized} ms`)
-
-            await findimages(pageurl, url)
-            await findText(pageurl)
-            await findOgTags(pageurl)
-            await findTags(pageurl)
+            await findimages(insidelinks.href)
+            await findText(insidelinks.href)
+            await findOgTags(insidelinks.href)
+            await findTags(insidelinks.href)
+    
         }
+
+
+
 
     } catch(err) {
         console.log(err)
