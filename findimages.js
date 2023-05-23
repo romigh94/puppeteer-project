@@ -35,15 +35,13 @@ const findimages = async (url) => {
           const folder = pathname.split(fileName).slice(0, -1)
           folder[0].replace(/^https?:\/\//, "").replace(/\?/g, "")
 
-          fs.mkdirSync(`./websites/${website}${folder}`, {recursive: true}, err => console.log(err))
-          fs.writeFileSync(`./websites/${website}${folder}${fileName}`, buffer, "binary")
+          fs.mkdirSync(`./images/${website}${folder}`, {recursive: true}, err => console.log(err))
+          fs.writeFileSync(`./images/${website}${folder}${fileName}`, buffer, "binary")
 
           //Links to images
           //console.log(matches.input)
           //console.log(pathname)
           //console.log(fileName)
-
-
       
     }
     });

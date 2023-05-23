@@ -6,10 +6,14 @@ const textSchema = require('./mongoDBSchemas/textSchema')
 const getData = async () => {
 
     try {
+
+        const links = await linkSchema.find()
+        const tags = await tagSchema.find()
+        const texts = await textSchema.find()
         
-        await linkSchema.find()
-        await tagSchema.find()
-        await textSchema.find() 
+        console.log(links)
+        console.log(tags)
+        console.log(texts)
     
     } catch (err) {
         console.log(err)

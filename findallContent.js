@@ -3,6 +3,7 @@ const {url, findimages} = require('./findimages')
 const {findText } = require('./findText')
 const {findOgTags } = require('./findOgTags')
 const {findTags } = require('./findTags')
+const { findFonts } = require('./findFonts')
 
 //console.log(url)
 
@@ -22,6 +23,7 @@ const findallContent = async (url) => {
     
         for (let filteredInsideLinks of filteredLinks) {
 
+            await findFonts(filteredInsideLinks.href)
             await findimages(filteredInsideLinks.href)
             await findText(filteredInsideLinks.href)
             await findOgTags(filteredInsideLinks.href)
@@ -29,13 +31,15 @@ const findallContent = async (url) => {
         }
 
         for (let insidelinks of links) {
-
+            
+            await findFonts(filteredInsideLinks.href)
             await findimages(insidelinks.href)
             await findText(insidelinks.href)
             await findOgTags(insidelinks.href)
             await findTags(insidelinks.href)
         }
 
+        
 
 
 

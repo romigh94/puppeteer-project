@@ -5,8 +5,9 @@ require('dotenv').config();
 
 const { findallContent } = require('./findallContent');
 const { findallLinks } = require('./findallLinks');
+const {getData} = require('./getData')
 
-const startUrl = 'https://www.pizzahut.se';
+const startUrl = 'https://ekospol.se';
 
 const index = async () => {
 
@@ -17,7 +18,12 @@ try {
         })
         .catch(err => console.log(err))
 
-        await findallLinks(startUrl)
+        
+        //Ifall man vill kolla på datan på terminalen
+        //await getData()
+        
+        
+        //await findallLinks(startUrl)
         await findallContent(startUrl)
 
 } catch (err) {

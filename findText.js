@@ -28,12 +28,12 @@ const findText = async (newurl) => {
 
         const headings = await page.evaluate(() => {
 
-            const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+            const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, p'))
             const textSet = new Set()
             const results = []
 
             heading.forEach((heading) => {
-                const tagname = heading.tagName;
+                const tagname = heading.tagName.toLowerCase();
                 const text = heading.textContent.trim();
                 const color = window.getComputedStyle(heading).getPropertyValue('color')
                 const font = window.getComputedStyle(heading).getPropertyValue('font-family')
@@ -47,19 +47,21 @@ const findText = async (newurl) => {
                 })
               })
 
+
+              ///FONT FIL , TTF WOF WOF2, Lagra dem i katalogen fonts, Nörda
               return results
 
             })
     
-            await Promise.all(
-                headings.map((heading) => {
-                  return textSchema.findOneAndUpdate(
-                    { url: url, tagname: heading.tagname, text: heading.text, color: heading.color, font: heading.font },
-                    { $set: heading },
-                    { upsert: true }
-                  )
-                })
+            for (let i = 0; i < headings.length; i++) {
+              const heading = headings[i];
+            
+              await textSchema.findOneAndUpdate(
+                { url: url, tagname: heading.tagname, text: heading.text, color: heading.color, font: heading.font },
+                { $set: heading },
+                { upsert: true }
               )
+            }
 
     await browser.close()
 
