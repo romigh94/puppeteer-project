@@ -1,10 +1,10 @@
 const puppeteer = require('puppeteer');
 const linkSchema = require('./mongoDBSchemas/linkSchema')
 
-const findallLinks = async (url) => {
+const findallLinks = async (starturl) => {
 
 
-    console.log('from all links', url)
+    console.log('from all links', starturl)
 
     //Alla länkar från alla sidor 
 
@@ -13,7 +13,7 @@ const findallLinks = async (url) => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
-        let pageurl = url //Måste vara exakt format som dem länkarna som finns i hemsidan.
+        let pageurl = starturl //Måste vara exakt format som dem länkarna som finns i hemsidan.
 
         console.log("Finding all links...")
         console.log(`Visiting page: ${pageurl}`)
@@ -38,11 +38,14 @@ const findallLinks = async (url) => {
 
             if (insidelinks.startsWith(pageurl)) {
 
+                /*
+
                 const randomized = Math.floor(Math.random() * 30000) + 1 
 
                 console.log('before timeout')
                 await new Promise(resolve => setTimeout(resolve, randomized))
                 console.log(`after timeout... after ${randomized} ms`)
+                */
 
                 if (visitedSet.has(insidelinks)) {
                     continue //Skip

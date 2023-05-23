@@ -16,7 +16,7 @@ let url = newurl
         let title = await page.evaluate(() => document.querySelector('title').textContent)
 
         let desc = await page.evaluate(() => {
-            return document.querySelector("head > meta[name='description']").getAttribute("content");
+            return document.querySelector("head > meta[name='description']").getAttribute("content")
         });
 
         const pageSet = new Set()
@@ -30,12 +30,13 @@ let url = newurl
 
         const updatedPage = await tagSchema.findOneAndUpdate(
             {},
-            { $set: { url: url, title: title, desc: desc } }
+            { $set: { url: url, title: title, desc: desc } },
+            {upsert: true}
         );
 
-        console.log('Tags updated:', updatedPage);
+        console.log('Tags updated:', updatedPage)
 
-        await browser.close();
+        await browser.close()
 
     } catch(error) {
         console.log(error)

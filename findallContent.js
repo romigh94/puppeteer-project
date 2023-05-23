@@ -26,9 +26,7 @@ const findallContent = async (url) => {
             await findText(filteredInsideLinks.href)
             await findOgTags(filteredInsideLinks.href)
             await findTags(filteredInsideLinks.href)
-    
         }
-
 
         for (let insidelinks of links) {
 
@@ -36,7 +34,6 @@ const findallContent = async (url) => {
             await findText(insidelinks.href)
             await findOgTags(insidelinks.href)
             await findTags(insidelinks.href)
-    
         }
 
 

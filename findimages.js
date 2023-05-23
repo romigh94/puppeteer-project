@@ -6,26 +6,17 @@ let url
 const findimages = async (url) => {
     url = url
 
-
-    //console.log("from images", url)
-
     try {
-    const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']});
+    const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
     const page = await browser.newPage();
 
     console.log("Finding all images")
 
     console.log(`Visiting ${url}`)
-
-    const visitedURL = new Set()
     
-
-    //const condition = true
-
-    //let counter = 0;
     page.on('response', async (response) => {
 
-      const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(response.url());
+      const matches = /.*\.(jpg|png|svg|gif|webp|avif)$/.exec(response.url())
 
       //console.log(response.status)
 
@@ -46,16 +37,12 @@ const findimages = async (url) => {
           //console.log(pathname)
           //console.log(fileName)
 
-          
-          if (visitedURL.has(response.url())) {
-            console.log('Redirecting to another URL...');
-            await page.goto(url, { waitUntil: 'networkidle2'}); 
-          }
+
       
     }
     });
 
-
+    await page.goto(url, { waitUntil: 'networkidle2'});
 
     await browser.close();
 
