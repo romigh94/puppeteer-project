@@ -12,6 +12,12 @@ const findText = async (newurl) => {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
+
+        const randomized = Math.floor(Math.random() * 30000) + 1 
+
+        console.log('before timeout')
+        await new Promise(resolve => setTimeout(resolve, randomized))
+        console.log(`after timeout... after ${randomized} ms`)
     
         console.log("Finding textcontent....")
     

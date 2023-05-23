@@ -6,8 +6,7 @@ require('dotenv').config();
 const { findallContent } = require('./findallContent');
 const { findallLinks } = require('./findallLinks');
 
-const startUrl = 'https://www.vvsbutiken.nu/';
-
+const startUrl = 'https://www.pizzahut.se';
 
 const index = async () => {
 
@@ -18,7 +17,7 @@ try {
         })
         .catch(err => console.log(err))
 
-        //await findallLinks(startUrl)
+        await findallLinks(startUrl)
         await findallContent(startUrl)
 
 } catch (err) {

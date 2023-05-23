@@ -15,6 +15,12 @@ const isDownloaded = new Set()
 
         console.log("Finding Og Tags...")
 
+        const randomized = Math.floor(Math.random() * 30000) + 1 
+
+        console.log('before timeout')
+        await new Promise(resolve => setTimeout(resolve, randomized))
+        console.log(`after timeout... after ${randomized} ms`)
+
         await page.goto(url)
 
         let ogImage = await page.evaluate(() => {
@@ -29,7 +35,7 @@ const isDownloaded = new Set()
             return
         }
 
-        const folder = url.replace(/^https?:\/\//, "").replace(/\?/g, "")
+        const website = new URL(url).hostname
         const lastIndex = ogImage.lastIndexOf('/')
         const fileName = ogImage.substring(lastIndex + 1)
         const imagePath = `${fileName}.png`
@@ -41,11 +47,11 @@ const isDownloaded = new Set()
         }
 
 
-        fs.mkdirSync(`./ogimages/${folder}`, {recursive: true}, err => console.log(err))
+        fs.mkdirSync(`./ogimages/${website}`, {recursive: true}, err => console.log(err))
 
         const response = await axios.get(ogImage, { responseType: 'stream' });
 
-        response.data.pipe(fs.createWriteStream(`./ogimages/${folder}/${imagePath}`))
+        response.data.pipe(fs.createWriteStream(`./ogimages/${website}/${imagePath}`))
           .on('finish', () => {
             console.log('Image downloaded successfully!')
             isDownloaded.add(imagePath)

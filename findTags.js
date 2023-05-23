@@ -9,32 +9,42 @@ let url = newurl
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
         const page = await browser.newPage()
 
+        const randomized = Math.floor(Math.random() * 30000) + 1 
+
+        console.log('before timeout')
+        await new Promise(resolve => setTimeout(resolve, randomized))
+        console.log(`after timeout... after ${randomized} ms`)
+
         console.log("Finding Tags....")
+        console.log(`Visiting ${url}...`)
+
 
         await page.goto(url)
 
-        let title = await page.evaluate(() => document.querySelector('title').textContent)
+        const [title, desc] = await Promise.all([
+            page.evaluate(() => document.querySelector('title').textContent),
+            page.evaluate(() =>
+              document.querySelector("head > meta[name='description']").getAttribute("content")
+            ),
+          ]);
 
-        let desc = await page.evaluate(() => {
-            return document.querySelector("head > meta[name='description']").getAttribute("content")
-        });
+          const pageSet = new Set();
+          const descSet = new Set();
+          const titleSet = new Set();
 
-        const pageSet = new Set()
-        const descSet = new Set()
-        const titleSet = new Set()
-
-        pageSet.add(url)
-        descSet.add(desc)
-        titleSet.add(title)
+          pageSet.add(url)
+          descSet.add([desc])
+          titleSet.add([title])
 
 
         const updatedPage = await tagSchema.findOneAndUpdate(
-            {},
-            { $set: { url: url, title: title, desc: desc } },
-            {upsert: true}
-        );
+            { url, title, desc },
+            { $set: { url, title, desc } },
+            { upsert: true }
+          )
+          .then(() => console.log("Tags is updated and saved in database"))
+          .catch((err) => console.log(err))
 
-        console.log('Tags updated:', updatedPage)
 
         await browser.close()
 
