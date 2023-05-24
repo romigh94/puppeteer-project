@@ -49,7 +49,7 @@ const isDownloaded = new Set()
 
         fs.mkdirSync(`./ogimages/${website}`, {recursive: true}, err => console.log(err))
 
-        const response = await axios.get(ogImage, { responseType: 'stream' });
+        const response = await axios.get(ogImage, { responseType: 'stream' })
 
         response.data.pipe(fs.createWriteStream(`./ogimages/${website}/${imagePath}`))
           .on('finish', () => {

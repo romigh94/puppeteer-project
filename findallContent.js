@@ -1,9 +1,11 @@
 const linkSchema = require('./mongoDBSchemas/linkSchema')
-const {url, findimages} = require('./findimages')
+const {url, findImages} = require('./findImages')
 const {findText } = require('./findText')
 const {findOgTags } = require('./findOgTags')
 const {findTags } = require('./findTags')
 const { findFonts } = require('./findFonts')
+const { findHeaders } = require('./findHeaders')
+
 
 //console.log(url)
 
@@ -23,17 +25,18 @@ const findallContent = async (url) => {
     
         for (let filteredInsideLinks of filteredLinks) {
 
-            await findFonts(filteredInsideLinks.href)
-            await findimages(filteredInsideLinks.href)
-            await findText(filteredInsideLinks.href)
-            await findOgTags(filteredInsideLinks.href)
-            await findTags(filteredInsideLinks.href)
+            await findHeaders(filteredInsideLinks.href)
+            //await findFonts(filteredInsideLinks.href)
+            //await findImages(filteredInsideLinks.href)
+            //await findText(filteredInsideLinks.href)
+            //await findOgTags(filteredInsideLinks.href)
+            //await findTags(filteredInsideLinks.href)
         }
 
         for (let insidelinks of links) {
             
-            await findFonts(filteredInsideLinks.href)
-            await findimages(insidelinks.href)
+            await findFonts(insidelinks.href)
+            await findImages(insidelinks.href)
             await findText(insidelinks.href)
             await findOgTags(insidelinks.href)
             await findTags(insidelinks.href)

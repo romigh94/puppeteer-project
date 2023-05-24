@@ -28,9 +28,9 @@ let url = newurl
             ),
           ]);
 
-          const pageSet = new Set();
-          const descSet = new Set();
-          const titleSet = new Set();
+          const pageSet = new Set()
+          const descSet = new Set()
+          const titleSet = new Set()
 
           pageSet.add(url)
           descSet.add([desc])

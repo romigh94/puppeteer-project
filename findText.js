@@ -33,8 +33,8 @@ const findText = async (newurl) => {
             const results = []
 
             heading.forEach((heading) => {
-                const tagname = heading.tagName.toLowerCase();
-                const text = heading.textContent.trim();
+                const tagname = heading.tagName.toLowerCase()
+                const text = heading.textContent.trim()
                 const color = window.getComputedStyle(heading).getPropertyValue('color')
                 const font = window.getComputedStyle(heading).getPropertyValue('font-family')
                 textSet.add(text)
@@ -54,7 +54,7 @@ const findText = async (newurl) => {
             })
     
             for (let i = 0; i < headings.length; i++) {
-              const heading = headings[i];
+              const heading = headings[i]
             
               await textSchema.findOneAndUpdate(
                 { url: url, tagname: heading.tagname, text: heading.text, color: heading.color, font: heading.font },

@@ -3,7 +3,7 @@ const fs = require('fs');
 
 let url
 
-const findimages = async (url) => {
+const findImages = async (url) => {
     url = url
 
     try {
@@ -56,5 +56,5 @@ const findimages = async (url) => {
     }
   }
 
-  module.exports = {url: url, findimages}
+  module.exports = {url: url, findImages}
   
