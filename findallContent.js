@@ -18,10 +18,12 @@ const findallContent = async (url) => {
 
     try {
         const links = await linkSchema.find();
+
+        console.log(links)
     
         const filteredLinks = links.filter(link => link.href.startsWith(start))
             
-            console.log(filteredLinks)
+            //console.log(filteredLinks)
     
         for (let filteredInsideLinks of filteredLinks) {
 

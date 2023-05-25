@@ -17,12 +17,8 @@ try {
             console.log('Connected to the database')
         })
         .catch(err => console.log(err))
+        
 
-        
-        //Ifall man vill kolla på datan på terminalen
-        //await getData()
-        
-        
         //await findallLinks(startUrl)
         await findallContent(startUrl)
 

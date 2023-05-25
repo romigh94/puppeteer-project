@@ -6,4 +6,4 @@ const linkSchema = new mongoose.Schema({
 
 })
 
-module.exports = mongoose.model("Puppeteer", linkSchema)
+module.exports = mongoose.model("PuppeteerLinks", linkSchema)
