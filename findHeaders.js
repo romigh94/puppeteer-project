@@ -12,6 +12,14 @@ const findHeaders = async (newurl) => {
     const website = new URL(url).hostname
     const appendPath = `./css/${website}/headers.css`
 
+
+    const randomized = Math.floor(Math.random() * 30000) + 1 
+
+    console.log('before timeout')
+    await new Promise(resolve => setTimeout(resolve, randomized))
+    console.log(`after timeout... after ${randomized} ms`)
+
+
     console.log('Finding headers....')
     console.log(`Visiting ${url}`)
 
@@ -22,29 +30,41 @@ const findHeaders = async (newurl) => {
       const results = {}
       const subResults = {}
 
+
       heading.forEach((item) => {
         const tagname = item.tagName.toLowerCase()
         const style = window.getComputedStyle(item)
+        const defaultStyle = getComputedStyle(document.body)
 
         if (!results[tagname]) {
           results[tagname] = {}
           subResults[tagname] = 0
         }
 
-        const count = ++subResults[tagname];
+
+        const count = ++subResults[tagname]
         const newTagName = count > 1 ? `.${tagname}-${count}` : tagname 
 
-        Array.from(style).forEach((property) => {
-          const propertyName = style.getPropertyValue(property)
-          if (!results[newTagName]) {
-            results[newTagName] = {};
+        const computedStyles = Array.from(style).reduce((obj, property) => {
+          const computedValue = style.getPropertyValue(property);
+          const defaultValue = defaultStyle.getPropertyValue(property);
+
+          if (computedValue !== defaultValue) {
+            obj[property] = computedValue;
           }
-          results[newTagName][property] = propertyName
-        });
+
+          return obj
+        }, {})
+
+        if (!results[newTagName]) {
+          results[newTagName] = {};
+        }
+
+        results[newTagName] = computedStyles;
       });
 
       return { results, subResults }
-    });
+    })
 
     const { results, subResults } = headings
 
@@ -74,7 +94,13 @@ const findHeaders = async (newurl) => {
           const existingLine = exists[filtered];
           const existingProperties = existingLine.split('{')[1].split('}')[0]
           const updatedProperties = `${existingProperties} ${properties}`
+
+          if (existingProperties === properties) {
+            return
+          }
+
           exists[filtered] = `${tagname} { ${updatedProperties} }`
+
         } else {
           exists.push(`${tagname} { ${properties} }`)
         }

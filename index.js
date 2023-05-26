@@ -19,7 +19,7 @@ try {
         .catch(err => console.log(err))
         
 
-        //await findallLinks(startUrl)
+        await findallLinks(startUrl)
         await findallContent(startUrl)
 
 } catch (err) {

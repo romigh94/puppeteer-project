@@ -1,16 +1,12 @@
 const linkSchema = require('./mongoDBSchemas/linkSchema')
-const {url, findImages} = require('./findImages')
+const {findImages} = require('./findimages')
 const {findText } = require('./findText')
 const {findOgTags } = require('./findOgTags')
 const {findTags } = require('./findTags')
 const { findFonts } = require('./findFonts')
 const { findHeaders } = require('./findHeaders')
 
-
-//console.log(url)
-
 let start
-
 
 const findallContent = async (url) => {
 
@@ -28,11 +24,11 @@ const findallContent = async (url) => {
         for (let filteredInsideLinks of filteredLinks) {
 
             await findHeaders(filteredInsideLinks.href)
-            //await findFonts(filteredInsideLinks.href)
-            //await findImages(filteredInsideLinks.href)
-            //await findText(filteredInsideLinks.href)
-            //await findOgTags(filteredInsideLinks.href)
-            //await findTags(filteredInsideLinks.href)
+            await findFonts(filteredInsideLinks.href)
+            await findImages(filteredInsideLinks.href)
+            await findText(filteredInsideLinks.href)
+            await findOgTags(filteredInsideLinks.href)
+            await findTags(filteredInsideLinks.href)
         }
 
         for (let insidelinks of links) {
@@ -43,9 +39,6 @@ const findallContent = async (url) => {
             await findOgTags(insidelinks.href)
             await findTags(insidelinks.href)
         }
-
-        
-
 
 
     } catch(err) {
