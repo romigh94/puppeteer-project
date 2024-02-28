@@ -4,6 +4,7 @@ const fs = require('fs')
 
 const findFonts = async (newurl) => {
 let url = newurl
+
     try {
 
         const browser = await puppeteer.launch({args: ['--disable-setuid-sandbox', '--no-sandbox']})
